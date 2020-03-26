@@ -3,7 +3,6 @@ package br.com.kbmg.wsconsultamedica.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.kbmg.wsconsultamedica.domain.Pessoa;
 import br.com.kbmg.wsconsultamedica.dto.body.PessoaBodyDto;
 import br.com.kbmg.wsconsultamedica.dto.body.UsuarioBodyDto;
 import br.com.kbmg.wsconsultamedica.response.ObjectResponse;
@@ -50,22 +48,10 @@ public class PessoaController {
 		return ResponseEntity.ok(new ObjectResponse(service.findAll()));
 	}
 
-	@GetMapping("/paginated")
-	public ResponseEntity<ObjectResponse> findAllPage(@RequestParam(defaultValue = "0") int page,
-			@RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "ASC") Sort.Direction direction,
-			@RequestParam(defaultValue = "nomeCompleto") String sortProperty) {
-		return ResponseEntity.ok(new ObjectResponse(service.findAllPaginated(page, size, direction, sortProperty)));
-	}
-
 	@DeleteMapping("/deleteOne")
 	public ResponseEntity<ObjectResponse> deleteById(@Valid @RequestParam String idPessoa) {
 		this.service.deleteById(idPessoa);
 		return ResponseEntity.ok(new ObjectResponse("Objeto deletado com sucesso"));
 	}
 
-	@DeleteMapping("/deleteEntity")
-	public ResponseEntity<ObjectResponse> delete(@Valid @RequestBody Pessoa pessoa) {
-		service.delete(pessoa);
-		return ResponseEntity.ok(new ObjectResponse("Objeto deletado com sucesso"));
-	}
 }

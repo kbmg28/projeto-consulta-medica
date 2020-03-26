@@ -5,7 +5,6 @@ public class PessoaDto {
 	private String idPessoa;
 	private String nomeCompleto;
 	private String email;
-	private String senha;
 	
 	public String getIdPessoa() {
 		return idPessoa;
@@ -25,11 +24,5 @@ public class PessoaDto {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getSenha() {
-		return senha;
-	}
-	public void setSenha(String senha) {
-		this.senha = senha;
-	}
-	
+
 }

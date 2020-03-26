@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
-  "version": 1, 
+  "version": 1,
   "newProjectRoot": "projects",
   "projects": {
     "front-consulta-medica": {
@@ -24,6 +24,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "src/styles.css"
             ],
             "scripts": []
@@ -119,6 +120,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "front-consulta-medica"
+    }
+  },
+  "defaultProject": "front-consulta-medica",
+  "cli": {
+    "analytics": "92626301-1061-4dd1-9704-d6a80d3a3e4e"
+  }
 }

@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -100,4 +101,9 @@ public class Pessoa implements Serializable {
 		return true;
 	}
 	
+	@PrePersist
+	public void PrePersist() {
+		this.nomeCompleto = this.nomeCompleto.toUpperCase();
+	}
+
 }

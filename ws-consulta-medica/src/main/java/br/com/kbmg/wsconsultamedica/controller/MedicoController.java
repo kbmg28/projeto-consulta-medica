@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.kbmg.wsconsultamedica.dto.MedicoDto;
 import br.com.kbmg.wsconsultamedica.dto.body.MedicoBodyDto;
 import br.com.kbmg.wsconsultamedica.response.ObjectResponse;
 import br.com.kbmg.wsconsultamedica.service.MedicoService;
@@ -40,7 +41,7 @@ public class MedicoController {
 
 	@GetMapping("/all")
 	public ResponseEntity<ObjectResponse> findAll() {
-		return ResponseEntity.ok(new ObjectResponse(service.findAll()));
+		return ResponseEntity.ok(new ObjectResponse(service.findAllDto(MedicoDto.class)));
 	}
 
 	@DeleteMapping("/deleteOne")

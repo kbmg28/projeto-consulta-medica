@@ -1,5 +1,6 @@
 package br.com.kbmg.wsconsultamedica.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityExistsException;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
+import br.com.kbmg.wsconsultamedica.domain.Compromisso;
 import br.com.kbmg.wsconsultamedica.domain.Pessoa;
 import br.com.kbmg.wsconsultamedica.dto.PessoaDto;
 import br.com.kbmg.wsconsultamedica.dto.body.PessoaBodyDto;
@@ -52,6 +54,19 @@ public class PessoaServiceImpl extends GenericServiceImpl<Pessoa> implements Pes
 				.orElseThrow(() -> new IllegalArgumentException(msg.get("usuario.senha.invalida")));
 
 		return (PessoaDto) Util.convertObject(present, PessoaDto.class);
+	}
+
+	@Override
+	public void deleteById(String id) {
+		Pessoa entity = this.findById(id);
+		
+		Optional<List<Compromisso>> opt = Optional.of(entity.getCompromissos());
+		
+		if (opt.isPresent()) {
+			throw new IllegalArgumentException(msg.get("pessoa.com.compromisso"));
+		}
+		
+		super.deleteById(id);
 	}
 
 }

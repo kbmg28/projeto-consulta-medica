@@ -9,6 +9,7 @@
           <li routerLinkActive="active" *ngIf="isAuthenticated">
             <a routerLink="/painel">Painel</a>
           </li>
+          
           <li routerLinkActive="active" *ngIf="!isAuthenticated">
             <a routerLink="/auth">Authenticate</a>
           </li>
@@ -16,19 +17,6 @@
         <ul class="nav navbar-nav navbar-right">
           <li  >
             <a style="cursor: pointer;" (click)="onLogout()">Logout</a>
-          </li>
-          <li class="dropdown">
-            <a style="cursor: pointer;" class="dropdown-toggle" role="button"
-              >Manage <span class="caret"></span
-            ></a>
-            <ul class="dropdown-menu">
-              <li>
-                <a style="cursor: pointer;">Save Data</a>
-              </li>
-              <li>
-                <a style="cursor: pointer;">Fetch Data</a>
-              </li>
-            </ul>
           </li>
         </ul>
       </div>

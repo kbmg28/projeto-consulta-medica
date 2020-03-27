@@ -4,8 +4,7 @@ import { Router } from '@angular/router';
 import { catchError, tap } from 'rxjs/operators';
 import { throwError, BehaviorSubject, fromEventPattern } from 'rxjs';
 import { PessoaControllerService } from '../typescript-angular-client/api/pessoaController.service'
-
-import { User } from './user.model';
+import { User } from '../model/user.model';
 
 export interface PessoaBodyDto { 
   email?: string;
@@ -48,6 +47,7 @@ export class AuthService {
         catchError(this.handleError),
         tap(resData => {
           const { email, nomeCompleto, idPessoa} = resData.data;
+          
           this.handleAuthentication(idPessoa, nomeCompleto, email);
         })
       );
@@ -64,9 +64,10 @@ export class AuthService {
     }
 
     const loadedUser = new User(
-      userData.email,
+      
       userData.userId,
-      userData.nome
+      userData.nome,
+      userData.email
     );
 
     if (loadedUser) {
@@ -81,11 +82,11 @@ export class AuthService {
   }
 
   private handleAuthentication(
+    userId: string,
     nome: string,
     email: string,
-    userId: string,
   ) {
-    const user = new User(email, userId, nome);
+    const user = new User(userId, nome, email);
     this.user.next(user);
     localStorage.setItem('userData', JSON.stringify(user));
   }

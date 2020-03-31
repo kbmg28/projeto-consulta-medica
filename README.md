@@ -2,7 +2,7 @@
 
 ## online
 
-1. Front-end: https://immense-savannah-33835.herokuapp.com/auth
+1. Front-end: https://kbmg28-front.herokuapp.com/auth
 2. Back-end: https://kbmg28-back.herokuapp.com/ws-consulta-medica/swagger-ui.html#/
 3. Usuario - __email__: teste@teste.com | __senha__: 123
 

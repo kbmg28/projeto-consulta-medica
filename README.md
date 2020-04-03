@@ -12,5 +12,8 @@
 1. Front-end: http://localhost:4200/auth
 2. Back-end: http://localhost:8000/ws-consulta-medica/swagger-ui.html
 
-## Resultado da aplicação
+## Resultado da aplicação - V1
 1. https://www.loom.com/share/ca99457420484ff38f2f09ac0c33e8e4
+
+## Resultado da aplicação - V2
+1. https://www.loom.com/share/ab8f93ca7f5241fb9938fc7606a16d84

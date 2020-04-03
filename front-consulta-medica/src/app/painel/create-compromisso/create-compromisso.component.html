@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <h4 class="modal-title">Marcar Consulta</h4>
+    <button type="button" class="close" aria-label="Close"
+     (click)="activeModal.dismiss('Cross click')">
+        <span aria-hidden="true">x</span>
+    </button>
+  </div>
+  <form [formGroup]="myForm" (ngSubmit)="submitForm()">
+    
+    <div class="form-group" style="padding: 20px;">
+        <label for="formControlSelectMedico">Médico</label>
+        <select class="form-control" id="exampleFormControlSelect1" formControlName="medico" [(ngModel)]="selectedMedico">
+            <option *ngFor="let med of listMedicos"[ngValue]="med" >
+                {{ med.nomeMedico }}
+            </option>
+        </select>
+      </div>
+    <div class="modal-footer">
+      <button class="btn btn-success"
+        [disabled]="!myForm.valid">
+        Salvar
+      </button>
+    </div>
+  </form>

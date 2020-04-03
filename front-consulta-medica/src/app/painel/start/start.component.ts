@@ -8,7 +8,12 @@ import { throwError, BehaviorSubject, fromEventPattern } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { Compromisso } from 'src/app/model/compromisso.model';
 import { Medico } from 'src/app/model/medico.model';
-
+import {NgbModal, ModalDismissReasons, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
+import { CreateMedicoComponent } from '../create-medico/create-medico.component';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { CreateCompromissoComponent } from '../create-compromisso/create-compromisso.component';
+import {PainelService} from '../painel.service';
+ 
 @Component({
   selector: 'app-start',
   templateUrl: './start.component.html',
@@ -16,67 +21,63 @@ import { Medico } from 'src/app/model/medico.model';
 })
 export class StartComponent implements OnInit {
   
+ editProfileForm: FormGroup;
+ 
   headElementsMedico = ['#', 'Médico'];
-  listMedicos: Array<Medico> = new Array();
+  listMedicos: Array<Medico>;
 
   headElements = ['#', 'Médico', 'Data/Hora'];
-  list: Array<Compromisso> = new Array();
+  listConsultas: Array<Compromisso> = new Array();
   error: string = null;
   nome: string = null;
-  
-  constructor(private compromissoApi: CompromissoControllerService, private medicoApi: MedicoControllerService) { }
+
+  title = 'ng-bootstrap-modal-demo';
+  closeResult: string;
+  modalOptions:NgbModalOptions;
+ 
+  constructor(private fb: FormBuilder, private modalService: NgbModal, private painelService: PainelService, private compromissoApi: CompromissoControllerService, private medicoApi: MedicoControllerService) { }
   
   ngOnInit(): void {
-    const userData: {
+    const userData: { 
       nome: string;
     } = JSON.parse(localStorage.getItem('userData'));
-    this.nome = 'Bem vindo ' + userData.nome + ' !!';
+    this.nome = 'Olá, ' + userData.nome + ' !!';
     this.getMedicos();
     this.getConsultasByPessoa();
-    
+
+    this.modalOptions = {
+      backdrop:'static',
+      backdropClass:'customBackdrop'
+    }
   }
   
   private getMedicos(){
-    
-    this.medicoApi.findAllUsingGET1().subscribe(resp => {
-      resp.data.forEach(e => {
-        this.listMedicos.push(e);
-      });
-      this.error = null;
-    },
-    errorMessage => {
-      this.handleError(errorMessage);
-    })
+   this.painelService.getAllMedicos();
+   this.painelService.dataMedico$.subscribe( resp => {
+     this.listMedicos = resp;
+   })
   }
   
   private getConsultasByPessoa(){
-    
-    const userData: {
-      nome: string;
-      userId: string;
-    } = JSON.parse(localStorage.getItem('userData'));
-    
-    this.compromissoApi.allByPessoaUsingGET(userData.userId).subscribe(resp => {
-      resp.data.forEach(element => {
-        this.list.push(element);
-      });
-      this.error = null;
-    },
-    errorMessage => {
-      this.handleError(errorMessage);
-    })
+    this.painelService.getConsultasByPessoa();
+   this.painelService.dataCompromisso$.subscribe( resp => {
+     this.listConsultas = resp;
+   })
+   this.verificaErro();
   }
   
-  private handleError(errorRes: HttpErrorResponse) {
-    
-    let errorMessage = 'Erro desconhecido!';
-    if (!errorRes.error || !errorRes.error.errorDescription) {
-      return throwError(errorMessage);
-    }
-    
-    errorMessage = errorRes.error.errorDescription.message
-    this.error = errorMessage;
-    return throwError(errorMessage);
+  private verificaErro(){
+    this.painelService.getConsultasByPessoa();
+   this.painelService.errorAtual$.subscribe( resp => {
+     this.error = resp;
+   })
   }
   
+  
+  public open(cadastraMedico:boolean) {
+    const modalRef = this.modalService.open(cadastraMedico ? CreateMedicoComponent : CreateCompromissoComponent, {
+        windowClass: 'modal-holder',
+        centered: true
+    });
+  }
 }

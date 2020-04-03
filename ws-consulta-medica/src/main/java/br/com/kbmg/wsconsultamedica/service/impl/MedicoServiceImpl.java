@@ -37,5 +37,14 @@ public class MedicoServiceImpl extends GenericServiceImpl<Medico> implements Med
 		}
 		super.deleteById(id);
 	}
+	
+	@Override
+	public List<?> findAllDto(Class<?> typeConvert) {
+		List<Medico> list = repository.findByOrderByNomeMedicoAsc();
+
+		Optional<List<Medico>> op = list.isEmpty() ? Optional.empty() : Optional.of(list);
+
+		return Util.convertList(op.get(), typeConvert);
+	}
 
 }

@@ -11,7 +11,7 @@
 	</parent>
 	<groupId>br.com.kbmg</groupId>
 	<artifactId>ws-consulta-medica</artifactId>
-	<version>0.0.1</version>
+	<version>0.0.2</version>
 	<name>ws-consulta-medica</name>
 	<description>API para marcação de consultas</description>
 
